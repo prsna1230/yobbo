@@ -16,6 +16,35 @@ app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "./build", "index.html"));
 });
 
+// import APIS Object
+const userApiObj = require("./APIS/userApi");
+
+// user userAPiObj when path starts with users
+app.use("/users", userApiObj);
+
+// import mongodb module
+const mongoClient = require("mongodb").MongoClient;
+
+// get database URL
+const DATABASE_URL = process.env.DATABASE_URL;
+
+// connect
+mongoClient.connect(DATABASE_URL, (err, client) => {
+  if (err) {
+    console.log("err in db connect", err);
+  } else {
+    // get Obj of database
+    let databaseObject = client.db("yobbo");
+    // get obj of collection
+    let userCollection = databaseObject.collection("usercollection");
+
+    // set to app project
+    app.set("userCollection", userCollection);
+
+    console.log("DB was Successfully Connected..!");
+  }
+});
+
 // assign port
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`server running on port ${PORT}`));

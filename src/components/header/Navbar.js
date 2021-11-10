@@ -1,6 +1,7 @@
 import React from "react";
-
+import { useHistory } from "react-router-dom";
 const Navbar = () => {
+  let history = useHistory();
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -43,6 +44,12 @@ const Navbar = () => {
                 Search
               </button>
             </form>
+            <button
+              className="btn btn-danger"
+              onClick={() => history.push("/register")}
+            >
+              Register
+            </button>
           </div>
         </div>
       </nav>

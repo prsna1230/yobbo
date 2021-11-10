@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router";
 
 const Register = () => {
   let {
@@ -8,8 +9,17 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  let history = useHistory();
   const onFormSubmit = async (userObj) => {
-    console.log(userObj);
+    let responseObj = await axios.post("/users/createaccount", userObj);
+    console.log(responseObj);
+    let payload = responseObj.data;
+    if (payload.message === "Success") {
+      alert("Successfully registered");
+      history.push("/login");
+    } else {
+      alert("User name already taken, please choose unique username");
+    }
   };
   return (
     <div className="row mt-5">
@@ -17,7 +27,7 @@ const Register = () => {
         className="col-11 col-sm-8 col-md-6 col-lg-5 shadow mx-auto mt-3"
         onSubmit={handleSubmit(onFormSubmit)}
       >
-        <h2 className="text-start">Sign Up</h2>
+        <h2 className="text-start heading">Sign Up</h2>
         {/* username */}
         <div className="form-floating mb-4">
           <input
@@ -28,11 +38,12 @@ const Register = () => {
             placeholder="username"
             {...register("username", { required: true })}
           />
-          <label htmlFor="username">Username*</label>
+          {errors.username?.type === "required" ? (
+            <label className="text text-danger ">*Username is Required</label>
+          ) : (
+            <label htmlFor="username">Username*</label>
+          )}
         </div>
-        {errors.username?.type === "required" && (
-          <p className="alert alert-danger ">*Username is Required</p>
-        )}
 
         {/* password */}
         <div className="form-floating mb-4">
@@ -44,11 +55,12 @@ const Register = () => {
             placeholder="password"
             {...register("password", { required: true })}
           />
-          <label htmlFor="password">Password*</label>
+          {errors.password?.type === "required" ? (
+            <label className="text text-danger ">*password is Required</label>
+          ) : (
+            <label htmlFor="password">Password*</label>
+          )}
         </div>
-        {errors.password?.type === "required" && (
-          <p className="alert alert-danger ">*password is Required</p>
-        )}
 
         {/* date od birth */}
         <div className="form-floating mb-2">
@@ -60,10 +72,28 @@ const Register = () => {
             placeholder="dob"
             {...register("dob", { required: true })}
           />
-          <label htmlFor="dob">Dob*</label>
+
+          {errors.dob?.type === "required" ? (
+            <label className="text text-danger ">*Dob is Required</label>
+          ) : (
+            <label htmlFor="dob">Dob*</label>
+          )}
         </div>
-        {errors.dob?.type === "required" && (
-          <p className="alert alert-danger ">*Dob is Required</p>
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value="readPrivacy"
+            id="readPrivacy"
+            {...register("readPrivacy", { required: true })}
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            *I declare to have read the privacy policy
+          </label>
+        </div>
+        {errors.readPrivacy?.type === "required" && (
+          <p className="text text-danger ">*checking is Required</p>
         )}
 
         {/* Submit */}

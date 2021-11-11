@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <div>
       <nav
-        className="navbar navbar-expand-lg navbar-light sticky-top"
+        className="navbar navbar-expand-lg navbar-light sticky-top p-0"
         style={{ backgroundColor: "#e3f2fd" }}
       >
         <div className="container-fluid">
@@ -26,7 +26,7 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active heading" href="/men">
+                <a className="nav-link heading" href="/men">
                   MEN
                 </a>
               </li>
@@ -59,7 +59,7 @@ const Navbar = () => {
                   src="https://img.icons8.com/color/48/000000/gender-neutral-user.png"
                   alt=""
                   width="24px"
-                  className="my-auto dropdown-toggle"
+                  className="my-auto d-block mx-auto dropdown-toggle"
                   id="navbarDarkDropdownMenuLink"
                   role="button"
                   data-bs-toggle="dropdown"
@@ -79,12 +79,12 @@ const Navbar = () => {
                     </button>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="/">
                       Another action
                     </a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="/">
                       Something else here
                     </a>
                   </li>
@@ -95,7 +95,7 @@ const Navbar = () => {
                   src="https://img.icons8.com/color/48/000000/like.png"
                   alt=""
                   width="24px"
-                  className="my-auto"
+                  className="my-auto d-block mx-auto "
                 />
                 <p className="heading">Wishlist</p>
               </li>
@@ -104,7 +104,7 @@ const Navbar = () => {
                   src="https://img.icons8.com/color/48/000000/shopaholic.png"
                   alt=""
                   width="24px"
-                  className="my-auto"
+                  className="my-auto d-block mx-auto "
                 />
                 <p className="heading">Cart</p>
               </li>

@@ -84,9 +84,12 @@ const Navbar = () => {
                     </a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="/">
-                      Something else here
-                    </a>
+                    <button
+                      className="btn dropdown-item heading"
+                      onClick={() => history.push("/adminlogin")}
+                    >
+                      Admin Login
+                    </button>
                   </li>
                 </ul>
               </li>

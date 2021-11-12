@@ -1,7 +1,28 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { clearLoginState } from "../../store/userSlice";
+
 const Navbar = () => {
+  let { isSuccess, userObj } = useSelector((state) => state.user);
+  let dispatch = useDispatch();
   let history = useHistory();
+  let [token, setToken] = useState(null);
+  const onUserLogout = () => {
+    // remove token frm Local Storage
+    localStorage.clear();
+    setToken(null);
+    dispatch(clearLoginState());
+  };
+  // to get Name
+  useEffect(() => {
+    // for Userdashboard
+    if (!isSuccess) {
+      history.push(`/home`);
+    }
+  }, [isSuccess]);
+
   return (
     <div>
       <nav
@@ -65,19 +86,37 @@ const Navbar = () => {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 />
-                <p className="dropdown heading">profile</p>
+                {token === null && !isSuccess ? (
+                  <p className="dropdown heading">profile</p>
+                ) : (
+                  <p>{localStorage.getItem("name")}</p>
+                )}
+
                 <ul
                   class="dropdown-menu dropdown-menu-dark"
                   aria-labelledby="navbarDarkDropdownMenuLink"
                 >
-                  <li>
-                    <button
-                      className="btn dropdown-item heading"
-                      onClick={() => history.push("/login")}
-                    >
-                      Login/Register
-                    </button>
-                  </li>
+                  {token === null && !isSuccess ? (
+                    <li>
+                      <button
+                        className="btn dropdown-item heading"
+                        onClick={() => history.push("/login")}
+                      >
+                        Login/Register
+                      </button>
+                    </li>
+                  ) : (
+                    <li>
+                      <button
+                        className="btn dropdown-item heading"
+                        onClick={onUserLogout}
+                      >
+                        {localStorage.setItem("name", userObj.name)}
+                        Logout
+                      </button>
+                    </li>
+                  )}
+
                   <li>
                     <a class="dropdown-item" href="/">
                       Another action

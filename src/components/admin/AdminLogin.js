@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { userLogin, clearLoginState } from "../../store/userSlice";
-const Login = () => {
+const AdminLogin = () => {
   let history = useHistory();
   let dispatch = useDispatch(clearLoginState);
   let [userCredentialObj, setUserCredentialObj] = useState({
@@ -19,13 +19,13 @@ const Login = () => {
   useEffect(() => {
     // for Userdashboard
     if (isSuccess === true) {
-      history.push(`/home/${userObj.name}`);
+      history.push(`/adminDashboard/${userObj.name}`);
     }
-    console.log(userCredentialObj);
     // eslint-disable-next-line
   }, [userCredentialObj, isSuccess]);
   // form submit
   function onLoginFormSubmit(userObj) {
+    userObj.type = "Admin";
     setUserCredentialObj({ ...userObj });
     dispatch(userLogin({ ...userObj }));
   }
@@ -36,7 +36,7 @@ const Login = () => {
         onSubmit={handleSubmit(onLoginFormSubmit)}
       >
         <h2 className="text-start mb-3 text-dark heading p-2">
-          Login{" "}
+          Admin Login{" "}
           <span className="text-danger text-center fs-6">
             {message && `* ${message}`}
           </span>
@@ -48,13 +48,13 @@ const Login = () => {
             name="email"
             id="email"
             className="form-control"
-            placeholder="Email"
+            placeholder="Admin Email"
             {...register("email", { required: true })}
           />
           {errors.email?.type === "required" ? (
             <label className="text-danger">*Email is Required</label>
           ) : (
-            <label htmlFor="email">Email*</label>
+            <label htmlFor="email">Admin Email*</label>
           )}
         </div>
 
@@ -65,13 +65,13 @@ const Login = () => {
             name="password"
             id="password"
             className="form-control"
-            placeholder="Password"
+            placeholder="Admin Password"
             {...register("password", { required: true })}
           />
           {errors.password?.type === "required" ? (
             <label className="text-danger ">*Password is Required</label>
           ) : (
-            <label htmlFor="password">Password*</label>
+            <label htmlFor="password">Admin Password*</label>
           )}
         </div>
 
@@ -79,17 +79,9 @@ const Login = () => {
         <button className="btn btn-warning w-50 d-block w-100 mt-3 heading">
           Sign in
         </button>
-        {/* register page */}
-        <h5 className="pt-4 text-center heading">New to YObbO?</h5>
-        <h6
-          className="btn text-primary d-block text-center py-0 mb-4 heading"
-          onClick={() => history.push("/register")}
-        >
-          Create Account
-        </h6>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default AdminLogin;

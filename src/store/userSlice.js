@@ -22,9 +22,16 @@ export const userLogin = createAsyncThunk(
     let data;
     // encrypt userCredential
     let encryptedUser = encrypt(userCredentialObj);
-    let response = await axios.post("/users/login", {
-      userCredential: encryptedUser,
-    });
+    let response;
+    if (userCredentialObj.type === "Admin") {
+      response = await axios.post("/admin/login", {
+        adminCredential: encryptedUser,
+      });
+    } else {
+      response = await axios.post("/users/login", {
+        userCredential: encryptedUser,
+      });
+    }
     data = response.data;
     // After Successful response
     if (data.message === "success") {

@@ -80,7 +80,7 @@ const Login = () => {
           Sign in
         </button>
         {/* register page */}
-        <h5 className="pt-4 text-center heading">New to YooBo?</h5>
+        <h5 className="pt-4 text-center heading">New to YObbO?</h5>
         <h6
           className="btn text-primary d-block text-center py-0 mb-4 heading"
           onClick={() => history.push("/register")}

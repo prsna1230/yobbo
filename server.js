@@ -19,10 +19,12 @@ app.get("*", (req, res) => {
 // import APIS Object
 const userApiObj = require("./APIS/userApi");
 const adminApiObj = require("./APIS/adminApi");
+const productApiObj = require("./APIS/productApi");
 
 // user userAPiObj when path starts with users
 app.use("/users", userApiObj);
 app.use("/admin", adminApiObj);
+app.use("/product", productApiObj);
 
 // import mongodb module
 const mongoClient = require("mongodb").MongoClient;
@@ -40,10 +42,12 @@ mongoClient.connect(DATABASE_URL, (err, client) => {
     // get obj of collection
     let userCollection = databaseObject.collection("usercollection");
     let adminCollection = databaseObject.collection("admincollection");
+    let productCollection = databaseObject.collection("productcollection");
 
     // set to app project
     app.set("userCollection", userCollection);
     app.set("adminCollection", adminCollection);
+    app.set("productCollection", productCollection);
 
     console.log("DB was Successfully Connected..!");
   }

@@ -6,6 +6,7 @@ import { clearLoginState } from "../../store/userSlice";
 
 const Navbar = () => {
   let { isSuccess, userObj } = useSelector((state) => state.user);
+  console.log("userObj:", userObj);
   let dispatch = useDispatch();
   let history = useHistory();
   let [token, setToken] = useState(null);
@@ -15,8 +16,10 @@ const Navbar = () => {
     setToken(null);
     dispatch(clearLoginState());
   };
+  let name;
   // to get Name
   useEffect(() => {
+    name = localStorage.getItem("name");
     // for Userdashboard
     if (!isSuccess) {
       history.push(`/home`);
@@ -89,7 +92,7 @@ const Navbar = () => {
                 {token === null && !isSuccess ? (
                   <p className="dropdown heading">profile</p>
                 ) : (
-                  <p>{localStorage.getItem("name")}</p>
+                  <p>{name}</p>
                 )}
 
                 <ul
@@ -123,12 +126,16 @@ const Navbar = () => {
                     </a>
                   </li>
                   <li>
-                    <button
-                      className="btn dropdown-item heading"
-                      onClick={() => history.push("/adminlogin")}
-                    >
-                      Admin Login
-                    </button>
+                    {token === null && !isSuccess ? (
+                      <button
+                        className="btn dropdown-item heading"
+                        onClick={() => history.push("/adminlogin")}
+                      >
+                        Admin Login
+                      </button>
+                    ) : (
+                      <></>
+                    )}
                   </li>
                 </ul>
               </li>

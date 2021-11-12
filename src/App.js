@@ -4,6 +4,7 @@ import Register from "./components/user/Register";
 import Login from "./components/user/Login";
 import AdminLogin from "./components/admin/AdminLogin";
 import Home from "./components/Home";
+import Admindashboard from "./components/admin/Admindashboard";
 function App() {
   return (
     <BrowserRouter>
@@ -17,6 +18,9 @@ function App() {
         </Route>
         <Route path="/adminlogin">
           <AdminLogin />
+        </Route>
+        <Route path="/admindashboard/:name">
+          <Admindashboard />
         </Route>
         <Route path="/home/:name">
           <Home />
